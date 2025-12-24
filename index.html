@@ -3,79 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bar Menu</title>
+    <title>Bar Prova - Menu</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f4f4f4; }
-        .category-card { transition: all 0.3s ease; }
-        .content-drawer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
-        .open .content-drawer { max-height: 2000px; }
-        .open .chevron { transform: rotate(180deg); }
-        /* Slanted background effect like your image */
-        .card-bg {
-            clip-path: polygon(0 0, 70% 0, 100% 100%, 0% 100%);
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        .card-slant { clip-path: polygon(0 0, 75% 0, 100% 100%, 0% 100%); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .item-row { border-bottom: 1px solid #f0f0f0; padding: 12px 0; }
+        .item-row:last-child { border-bottom: none; }
+        .active .accordion-content { max-height: 5000px; }
+        .active .chevron { transform: rotate(180deg); }
     </style>
 </head>
-<body class="max-w-md mx-auto pb-10">
+<body class="max-w-md mx-auto min-h-screen pb-20">
 
-    <div class="relative h-48 bg-gray-800">
-        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800" alt="Bar" class="w-full h-full object-cover opacity-60">
-        <div class="absolute bottom-4 left-6 text-white">
-            <h1 class="text-3xl font-bold">Bar Menu</h1>
-            <p class="text-sm opacity-80">Caffetteria, bibite, dolci e cocktail</p>
+    <div class="relative h-56 bg-gray-900 mb-6">
+        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800" class="w-full h-full object-cover opacity-50">
+        <div class="absolute bottom-6 left-6 text-white">
+            <h1 class="text-4xl font-bold">Bar Prova</h1>
+            <p class="text-sm opacity-90 mt-1">Caffetteria, Bibite, Dolci e Alcolici</p>
+            <a href="#" class="inline-block mt-3 text-xs bg-white/20 backdrop-blur-md px-3 py-1 rounded-full border border-white/30 text-white">Guarda il menù ristorante</a>
         </div>
     </div>
 
-    <div class="p-4 space-y-4">
-
-        <div class="bg-white rounded-2xl shadow-sm overflow-hidden accordion-item">
-            <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between relative h-24 text-left">
-                <div class="absolute inset-0 bg-[#A67C00] card-bg z-0"></div>
-                <span class="relative z-10 ml-6 text-white text-xl font-bold uppercase">Caffetteria</span>
-                <div class="mr-4 z-10 text-gray-400">
-                    <svg class="w-6 h-6 chevron transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </div>
+    <div class="px-4 space-y-4" id="menu-container">
+        
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden menu-category">
+            <button onclick="toggle(this)" class="w-full relative h-20 flex items-center justify-between group">
+                <div class="absolute inset-0 bg-[#A67C00] card-slant z-0"></div>
+                <span class="relative z-10 ml-6 text-white font-bold text-xl uppercase tracking-wide">Caffetteria</span>
+                <svg class="chevron relative z-10 mr-6 w-6 h-6 text-white transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </button>
-            <div class="content-drawer bg-white">
-                <div class="p-4 space-y-3">
-                    <div class="flex justify-between border-b pb-2"><span>Caffè Espresso</span><span class="font-bold">€ 1,40</span></div>
-                    <div class="flex justify-between border-b pb-2"><span>Caffè Americano</span><span class="font-bold">€ 2,00</span></div>
-                    <div class="flex justify-between border-b pb-2"><span>Cappuccino</span><span class="font-bold">€ 2,00</span></div>
-                    <div class="flex justify-between border-b pb-2">
-                        <div>
-                            <p>Orzo</p>
-                            <p class="text-xs text-gray-500">Piccolo / Grande</p>
-                        </div>
-                        <span class="font-bold">€ 1,50 / € 2,00</span>
-                    </div>
+            <div class="accordion-content px-6 bg-white">
+                <div class="item-row flex justify-between"><span>Caffè espresso</span><span class="font-bold">€ 1,40</span></div>
+                <div class="item-row flex justify-between"><span>Caffè Americano</span><span class="font-bold">€ 2,00</span></div>
+                <div class="item-row flex justify-between"><span>Caffè decaffeinato</span><span class="font-bold">€ 1,80</span></div>
+                <div class="item-row flex justify-between"><span>Cappuccino</span><span class="font-bold">€ 2,00</span></div>
+                <div class="item-row flex justify-between">
+                    <div><p>Orzo / Ginseng</p><p class="text-xs text-gray-400">Piccolo / Grande</p></div>
+                    <span class="font-bold">€ 1,50 / 2,50</span>
+                </div>
+                <div class="item-row flex justify-between">
+                    <div><p>Calimero</p><p class="text-xs text-gray-400">vov, latte, brandy, panna, whiskey, caffè</p></div>
+                    <span class="font-bold">€ 5,00</span>
+                </div>
+                <div class="item-row flex justify-between"><span>Té e Tisane</span><span class="font-bold">€ 3,00</span></div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden menu-category">
+            <button onclick="toggle(this)" class="w-full relative h-20 flex items-center justify-between">
+                <div class="absolute inset-0 bg-[#D97706] card-slant z-0"></div>
+                <span class="relative z-10 ml-6 text-white font-bold text-xl uppercase">Dolci e Snack</span>
+                <svg class="chevron w-6 h-6 text-white mr-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="accordion-content px-6">
+                <div class="item-row flex justify-between"><span>Brioche</span><span class="font-bold">€ 1,50</span></div>
+                <div class="item-row flex justify-between"><span>Tiramisù</span><span class="font-bold">€ 6,00</span></div>
+                <div class="item-row flex justify-between"><span>Strudel di mele</span><span class="font-bold">€ 7,00</span></div>
+                <div class="item-row flex justify-between"><span>Maxi toast</span><span class="font-bold">€ 6,00</span></div>
+                <div class="item-row flex justify-between">
+                    <div><p>Crêpes Nutella</p><p class="text-xs text-gray-400">+ Panna/Cocco +€0,50</p></div>
+                    <span class="font-bold">€ 5,00</span>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-2xl shadow-sm overflow-hidden accordion-item">
-            <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between relative h-24 text-left">
-                <div class="absolute inset-0 bg-[#4A7C92] card-bg z-0"></div>
-                <span class="relative z-10 ml-6 text-white text-xl font-bold uppercase">Bibite e Birre</span>
-                <div class="mr-4 z-10 text-gray-400">
-                    <svg class="w-6 h-6 chevron transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </div>
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden menu-category">
+            <button onclick="toggle(this)" class="w-full relative h-20 flex items-center justify-between">
+                <div class="absolute inset-0 bg-[#1E40AF] card-slant z-0"></div>
+                <span class="relative z-10 ml-6 text-white font-bold text-xl uppercase">Bibite e Birre</span>
+                <svg class="chevron w-6 h-6 text-white mr-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <div class="content-drawer bg-white">
-                <div class="p-4 space-y-3">
-                    <div class="flex justify-between border-b pb-2"><span>Acqua 0.5L</span><span class="font-bold">€ 2,00</span></div>
-                    <div class="flex justify-between border-b pb-2"><span>Birra alla spina Calanda (0.3L)</span><span class="font-bold">€ 3,50</span></div>
-                </div>
+            <div class="accordion-content px-6">
+                <div class="item-row flex justify-between"><span>Acqua 0,5 L</span><span class="font-bold">€ 2,00</span></div>
+                <div class="item-row flex justify-between"><span>Bibite (Coca, Fanta, Sprite)</span><span class="font-bold">€ 4,00</span></div>
+                <div class="item-row flex justify-between"><span>Spremuta d’arancia</span><span class="font-bold">€ 4,00</span></div>
+                <div class="item-row flex justify-between"><span>Birra Calanda 0.5L</span><span class="font-bold">€ 6,00</span></div>
+                <div class="item-row flex justify-between"><span>1816 Livigno (IPA/Hells)</span><span class="font-bold">€ 7,00</span></div>
             </div>
         </div>
 
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden menu-category">
+            <button onclick="toggle(this)" class="w-full relative h-20 flex items-center justify-between">
+                <div class="absolute inset-0 bg-[#7C3AED] card-slant z-0"></div>
+                <span class="relative z-10 ml-6 text-white font-bold text-xl uppercase">Cocktails</span>
+                <svg class="chevron w-6 h-6 text-white mr-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="accordion-content px-6">
+                <div class="item-row flex justify-between">
+                    <div><p>Livignasc</p><p class="text-xs text-gray-400">Taneda, Braulio, Vodka, Rosmarino</p></div>
+                    <span class="font-bold">€ 11,00</span>
+                </div>
+                <div class="item-row flex justify-between"><span>Aperol Spritz / Hugo</span><span class="font-bold">€ 7,50</span></div>
+                <div class="item-row flex justify-between"><span>Negroni / Moscow Mule</span><span class="font-bold">€ 8,50</span></div>
+                <div class="item-row flex justify-between"><span>Cocktails Analcolici</span><span class="font-bold">€ 7,00</span></div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden menu-category">
+            <button onclick="toggle(this)" class="w-full relative h-20 flex items-center justify-between">
+                <div class="absolute inset-0 bg-[#991B1B] card-slant z-0"></div>
+                <span class="relative z-10 ml-6 text-white font-bold text-xl uppercase">Vini e Amari</span>
+                <svg class="chevron w-6 h-6 text-white mr-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="accordion-content px-6">
+                <p class="text-xs font-bold text-gray-400 mt-4 uppercase">Vini al calice</p>
+                <div class="item-row flex justify-between"><span>Sassella Valtellina</span><span class="font-bold">€ 6,00</span></div>
+                <div class="item-row flex justify-between"><span>Franciacorta</span><span class="font-bold">€ 8,00</span></div>
+                <p class="text-xs font-bold text-gray-400 mt-4 uppercase">Amari e Grappe</p>
+                <div class="item-row flex justify-between"><span>Braulio / Amaro del Capo</span><span class="font-bold">€ 5,00</span></div>
+                <div class="item-row flex justify-between"><span>Grappa 18 Lune</span><span class="font-bold">€ 6,00</span></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mt-10 px-6 text-center text-gray-400 text-xs">
+        <p>Vogliate comunicarci le vostre allergie al momento dell'ordinazione.</p>
+        <p class="mt-4">© 2025 Bar Prova | Scrollidea</p>
     </div>
 
     <script>
-        function toggleAccordion(element) {
-            const item = element.parentElement;
-            item.classList.toggle('open');
+        function toggle(btn) {
+            const parent = btn.parentElement;
+            // Close other sections (optional, remove for multiple open)
+            document.querySelectorAll('.menu-category').forEach(el => {
+                if (el !== parent) el.classList.remove('active');
+            });
+            parent.classList.toggle('active');
         }
     </script>
 </body>
