@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Digitale - Bar Prova</title>
+    <title>Bar - Menu Digitale</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #1a1a1a; }
         .nav-glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.3); }
         .btn-nav { transition: all 0.3s ease; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
-        /* Stile per il tasto della pagina attiva */
         .active-page { background-color: #000; color: #fff !important; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .slant { clip-path: polygon(0 0, 75% 0, 100% 100%, 0% 100%); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .active .accordion-content { max-height: 3000px; padding-bottom: 20px; }
+        .active .chevron { transform: rotate(180deg); }
     </style>
 </head>
 <body class="max-w-md mx-auto">
@@ -19,30 +22,50 @@
     <nav class="fixed top-4 left-0 right-0 z-50 px-4">
         <div class="nav-glass p-1.5 rounded-full flex justify-between gap-1 shadow-2xl">
             <a href="index.html" class="btn-nav flex-1 py-2.5 text-center rounded-full active-page">Bar</a>
-            <a href="ristorante.html" class="btn-nav flex-1 py-2.5 text-center rounded-full text-gray-500 hover:bg-gray-100">Ristorante</a>
-            <a href="pizzeria.html" class="btn-nav flex-1 py-2.5 text-center rounded-full text-gray-500 hover:bg-gray-100">Pizzeria</a>
-            <a href="vini.html" class="btn-nav flex-1 py-2.5 text-center rounded-full text-gray-500 hover:bg-gray-100">Vini</a>
+            <a href="ristorante.html" class="btn-nav flex-1 py-2.5 text-center rounded-full text-gray-500">Ristorante</a>
+            <a href="pizzeria.html" class="btn-nav flex-1 py-2.5 text-center rounded-full text-gray-500">Pizzeria</a>
+            <a href="vini.html" class="btn-nav flex-1 py-2.5 text-center rounded-full text-gray-500">Vini</a>
         </div>
     </nav>
 
     <header class="relative h-[40vh] w-full overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800" 
-             alt="Bar Header" 
-             class="absolute inset-0 w-full h-full object-cover">
-        
+        <img src="images/bar.jpg" alt="Bar Header" class="absolute inset-0 w-full h-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-t from-[#f8f9fa] via-transparent to-black/40"></div>
-        
         <div class="absolute bottom-8 left-6">
-            <h1 class="text-5xl font-[900] text-gray-900 tracking-tighter leading-none">BAR</h1>
-            <p class="text-gray-600 font-medium ml-1 mt-1">Caffetteria, Drink & Snack</p>
+            <h1 class="text-5xl font-[900] text-gray-900 tracking-tighter leading-none uppercase">BAR</h1>
+            <p class="text-gray-600 font-medium ml-1 mt-1">Caffetteria & Drink</p>
         </div>
     </header>
 
-    <main id="menu-content" class="px-4 py-6 space-y-4">
-        <div class="text-center py-20 text-gray-300 font-bold uppercase tracking-widest text-sm">
-            Inizia ad aggiungere le sezioni...
-        </div>
+    <main class="px-4 py-6 space-y-4">
+        <div id="caffetteria"></div>
+        <div id="cioccolate"></div>
+        <div id="affogati"></div>
     </main>
 
+    <footer class="mt-12 pb-10 px-4">
+        <div class="w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100">
+            <img src="images/footer.jpg" alt="Info" class="w-full h-auto block">
+        </div>
+    </footer>
+
+    <script>
+        async function loadSection(id, path) {
+            const response = await fetch(path);
+            const html = await response.text();
+            document.getElementById(id).innerHTML = html;
+        }
+
+        // Diciamo al browser quali file caricare
+        loadSection('caffetteria', 'sections/bar/caffetteria.html');
+        loadSection('cioccolate', 'sections/bar/cioccolate.html');
+        loadSection('affogati', 'sections/bar/affogati.html');
+
+        // Funzione per aprire/chiudere i menu
+        function toggleSection(btn) {
+            const parent = btn.closest('.menu-item');
+            parent.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>
