@@ -7,16 +7,54 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #1a1a1a; }
+        body { 
+            font-family: 'Inter', sans-serif !important; 
+            /* Colore di backup (grigio scuro) se l'immagine fallisce */
+            background-color: #333 !important; 
+            
+            /* Proviamo entrambi i percorsi comuni: con e senza slash iniziale */
+            background-image: 
+                linear-gradient(rgba(248, 249, 250, 0.9), rgba(248, 249, 250, 0.9)), 
+                url('images/background.jpg') !important;
+            
+            background-attachment: fixed !important;
+            background-size: cover !important;
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+            color: #1a1a1a; 
+            min-height: 100vh;
+        }
+
         .nav-glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.3); }
         .btn-nav { transition: all 0.3s ease; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
         .active-page { background-color: #000; color: #fff !important; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         
-        /* Stili per le sezioni che vengono caricate */
-        .slant { clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%); }
-        .accordion-content { max-height: 0; overflow: hidden; transition: all 0.3s ease-out; opacity: 0; }
-        .menu-item.active .accordion-content { max-height: 3000px; opacity: 1; padding-bottom: 1rem; }
-        .menu-item.active .chevron { transform: rotate(180deg); }
+        /* Taglio obliquo grande (80%) */
+        .slant { clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%); }
+
+        /* Effetto Roll Down fluido per il contenuto */
+        .accordion-content { 
+            max-height: 0; 
+            overflow: hidden; 
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; 
+            opacity: 0; 
+        }
+
+        /* Stato aperto */
+        .menu-item.active .accordion-content { 
+            max-height: 3000px; 
+            opacity: 1; 
+            padding-bottom: 1rem; 
+        }
+
+        /* Rotazione morbida della freccia */
+        .menu-item.active .chevron { 
+            transform: rotate(180deg); 
+        }
+
+        .chevron {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
     </style>
 </head>
 <body class="max-w-md mx-auto">
@@ -30,15 +68,15 @@
         </div>
     </nav>
 
-    <header class="relative h-[40vh] w-full overflow-hidden">
-        <img src="images/bar.jpg" alt="Bar Header" class="absolute inset-0 w-full h-full object-cover">
-        <div class="absolute bottom-8 left-6">
-            <h1 class="text-5xl font-[900] text-gray-900 tracking-tighter leading-none uppercase">Bar</h1>
-            <p class="text-gray-600 font-medium ml-1 mt-1">Caffetteria, Drink & Snack</p>
+    <header class="relative w-full overflow-hidden bg-white shadow-sm">
+        <img src="images/bar.png" alt="Bar Header" class="w-full h-auto block">
+        <div class="absolute bottom-6 left-6">
+            <h1 class="text-5xl font-[900] text-gray-900 tracking-tighter leading-none uppercase drop-shadow-sm">Bar</h1>
+            <p class="text-gray-600 font-medium ml-1 mt-1 drop-shadow-sm">Caffetteria, Drink & Snack</p>
         </div>
     </header>
 
-    <main id="menu-content" class="px-4 py-6 space-y-4">
+    <main id="menu-content" class="px-4 pt-6 pb-2 space-y-4">
         <div id="caffetteria"></div>
         <div id="cioccolate"></div>
         <div id="affogati"></div>
@@ -55,7 +93,7 @@
         <div id="altri-alcolici"></div>
     </main>
 
-    <footer class="mt-12 pb-10 px-4">
+    <footer class="mt-4 pb-10 px-4">
         <div class="w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100">
             <img src="images/footer.jpg" alt="Info e Contatti" class="w-full h-auto block">
         </div>
@@ -75,7 +113,6 @@
             }
         }
 
-        // Caricamento sezioni
         window.onload = () => {
             loadSection('caffetteria', 'sections/bar/caffetteria.html');
             loadSection('cioccolate', 'sections/bar/cioccolate.html');

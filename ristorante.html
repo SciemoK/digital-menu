@@ -7,35 +7,140 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #1a1a1a; }
-        .nav-glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.3); }
-        .btn-nav { transition: all 0.3s ease; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
-        .active-page { background-color: #000; color: #fff !important; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8f9fa; 
+            color: #1a1a1a; 
+            background-image: linear-gradient(rgba(248, 249, 250, 0.94), rgba(248, 249, 250, 0.94)), url('images/background.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            margin: 0;
+            padding-top: 80px; /* Spazio per non far finire l'header sotto la navbar fissa */
+        }
+        
+        /* Navigation - BLOCCATA IN ALTO */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px;
+            max-width: 448px; /* max-w-md */
+            margin: 0 auto;
+        }
+
+        .nav-glass { 
+            background: rgba(255, 255, 255, 0.8); 
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.4); 
+            border-radius: 9999px;
+            display: flex;
+            padding: 6px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-nav { 
+            flex: 1;
+            padding: 10px 0;
+            text-align: center;
+            border-radius: 9999px;
+            transition: all 0.3s ease; 
+            font-size: 11px; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+            color: #9ca3af;
+        }
+
+        .active-page { 
+            background-color: #000; 
+            color: #fff !important; 
+        }
+
+        /* Shadow & Accordion */
+        main#menu-content { overflow: visible !important; }
+        .menu-item { overflow: visible !important; position: relative; }
+        
+        .accordion-content { 
+            max-height: 0; 
+            overflow: visible !important; 
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; 
+            opacity: 0; 
+            pointer-events: none;
+        }
+
+        .menu-item.active .accordion-content { 
+            max-height: 3000px; 
+            opacity: 1; 
+            pointer-events: auto;
+            margin-bottom: 24px;
+        }
+
+        .menu-item.active .chevron { transform: rotate(180deg); }
+        .chevron { transition: transform 0.5s ease; }
+
+        .shadow-alpine { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08); }
     </style>
 </head>
 <body class="max-w-md mx-auto">
-    <nav class="fixed top-4 left-0 right-0 z-50 px-4">
-        <div class="nav-glass p-1.5 rounded-full flex justify-between gap-1 shadow-2xl">
-            <a href="index.html" class="btn-nav flex-1 py-2.5 text-center rounded-full text-gray-500">Bar</a>
-            <a href="ristorante.html" class="btn-nav flex-1 py-2.5 text-center rounded-full active-page">Ristorante</a>
-            <a href="pizzeria.html" class="btn-nav flex-1 py-2.5 text-center rounded-full text-gray-500">Pizzeria</a>
-            <a href="vini.html" class="btn-nav flex-1 py-2.5 text-center rounded-full text-gray-500">Vini</a>
-        </div>
-    </nav>
+
+    <div class="nav-container">
+        <nav class="nav-glass">
+            <a href="index.html" class="btn-nav">Bar</a>
+            <a href="ristorante.html" class="btn-nav active-page">Ristorante</a>
+            <a href="pizzeria.html" class="btn-nav">Pizzeria</a>
+            <a href="vini.html" class="btn-nav">Vini</a>
+        </nav>
+    </div>
+
     <header class="relative h-[40vh] w-full overflow-hidden">
-        <img src="images/ristorante.jpg" alt="Ristorante Header" class="absolute inset-0 w-full h-full object-cover">        <div class="absolute inset-0 bg-gradient-to-t from-[#f8f9fa] via-transparent to-black/40"></div>
+        <img src="images/ristorante.jpg" alt="Ristorante Header" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#f8f9fa] via-transparent to-black/40"></div>
         <div class="absolute bottom-8 left-6">
             <h1 class="text-5xl font-[900] text-gray-900 tracking-tighter leading-none uppercase">Ristorante</h1>
             <p class="text-gray-600 font-medium ml-1 mt-1">La nostra cucina tipica</p>
         </div>
     </header>
-    <footer class="mt-12 pb-10 px-4">
+
+    <main id="menu-content" class="px-4 pt-8 space-y-4">
+        <div id="antipasti"></div>
+        <div id="primi"></div>
+        <div id="secondi"></div>
+        <div id="contorni"></div>
+        <div id="kids"></div>
+    </main>
+
+     <footer class="mt-12 pb-10 px-4">
         <div class="w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100">
             <img src="images/footer.jpg" alt="Info e Contatti" class="w-full h-auto block">
         </div>
         <p class="text-center text-[10px] text-gray-400 mt-4 uppercase tracking-widest font-bold">
-            © 2024 Bar Prova - Tutti i diritti riservati
+            © 2025 Bar Prova - Tutti i diritti riservati
         </p>
     </footer>
+    <script>
+        async function loadSection(id, path) {
+            try {
+                const response = await fetch(path);
+                const html = await response.text();
+                document.getElementById(id).innerHTML = html;
+            } catch (err) { console.error("Errore:", id); }
+        }
+
+        window.onload = () => {
+            loadSection('antipasti', 'sections/ristorante/antipasti.html');
+            loadSection('primi', 'sections/ristorante/primi.html');
+            loadSection('secondi', 'sections/ristorante/secondi.html');
+            loadSection('contorni', 'sections/ristorante/contorni.html');
+            loadSection('kids', 'sections/ristorante/kids.html');
+        };
+
+        function toggleSection(btn) {
+            const parent = btn.closest('.menu-item');
+            if(parent) parent.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>
