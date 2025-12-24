@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bar - Menu Digitale</title>
+    <title>Bar - Digital Menu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
     <style>
@@ -11,10 +11,12 @@
         .nav-glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.3); }
         .btn-nav { transition: all 0.3s ease; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
         .active-page { background-color: #000; color: #fff !important; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .slant { clip-path: polygon(0 0, 75% 0, 100% 100%, 0% 100%); }
-        .accordion-content { max-height: 0; overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .active .accordion-content { max-height: 3000px; padding-bottom: 20px; }
-        .active .chevron { transform: rotate(180deg); }
+        
+        /* Stili per le sezioni che vengono caricate */
+        .slant { clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: all 0.3s ease-out; opacity: 0; }
+        .menu-item.active .accordion-content { max-height: 3000px; opacity: 1; padding-bottom: 1rem; }
+        .menu-item.active .chevron { transform: rotate(180deg); }
     </style>
 </head>
 <body class="max-w-md mx-auto">
@@ -30,38 +32,67 @@
 
     <header class="relative h-[40vh] w-full overflow-hidden">
         <img src="images/bar.jpg" alt="Bar Header" class="absolute inset-0 w-full h-full object-cover">
-        <div class="absolute inset-0 bg-gradient-to-t from-[#f8f9fa] via-transparent to-black/40"></div>
         <div class="absolute bottom-8 left-6">
-            <h1 class="text-5xl font-[900] text-gray-900 tracking-tighter leading-none uppercase">BAR</h1>
-            <p class="text-gray-600 font-medium ml-1 mt-1">Caffetteria & Drink</p>
+            <h1 class="text-5xl font-[900] text-gray-900 tracking-tighter leading-none uppercase">Bar</h1>
+            <p class="text-gray-600 font-medium ml-1 mt-1">Caffetteria, Drink & Snack</p>
         </div>
     </header>
 
-    <main class="px-4 py-6 space-y-4">
+    <main id="menu-content" class="px-4 py-6 space-y-4">
         <div id="caffetteria"></div>
         <div id="cioccolate"></div>
         <div id="affogati"></div>
+        <div id="coppe"></div>
+        <div id="dolci"></div>
+        <div id="crepes"></div>
+        <div id="bibite"></div>
+        <div id="birre-bottiglia"></div>
+        <div id="vini-calice"></div>
+        <div id="cocktails"></div>
+        <div id="aperitivi"></div>
+        <div id="gin-tonic"></div>
+        <div id="amari"></div>
+        <div id="altri-alcolici"></div>
     </main>
 
     <footer class="mt-12 pb-10 px-4">
         <div class="w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100">
-            <img src="images/footer.jpg" alt="Info" class="w-full h-auto block">
+            <img src="images/footer.jpg" alt="Info e Contatti" class="w-full h-auto block">
         </div>
+        <p class="text-center text-[10px] text-gray-400 mt-4 uppercase tracking-widest font-bold">
+            © 2025 Bar Prova - Tutti i diritti riservati
+        </p>
     </footer>
 
     <script>
         async function loadSection(id, path) {
-            const response = await fetch(path);
-            const html = await response.text();
-            document.getElementById(id).innerHTML = html;
+            try {
+                const response = await fetch(path);
+                const html = await response.text();
+                document.getElementById(id).innerHTML = html;
+            } catch (err) {
+                console.error("Errore nel caricamento della sezione:", id);
+            }
         }
 
-        // Diciamo al browser quali file caricare
-        loadSection('caffetteria', 'sections/bar/caffetteria.html');
-        loadSection('cioccolate', 'sections/bar/cioccolate.html');
-        loadSection('affogati', 'sections/bar/affogati.html');
+        // Caricamento sezioni
+        window.onload = () => {
+            loadSection('caffetteria', 'sections/bar/caffetteria.html');
+            loadSection('cioccolate', 'sections/bar/cioccolate.html');
+            loadSection('affogati', 'sections/bar/affogati.html');
+            loadSection('coppe', 'sections/bar/coppe.html');
+            loadSection('dolci', 'sections/bar/dolci.html');
+            loadSection('crepes', 'sections/bar/crepes.html');
+            loadSection('bibite', 'sections/bar/bibite.html');
+            loadSection('birre-bottiglia', 'sections/bar/birre-bottiglia.html');
+            loadSection('vini-calice', 'sections/bar/vini-calice.html');
+            loadSection('cocktails', 'sections/bar/cocktails.html');
+            loadSection('aperitivi', 'sections/bar/aperitivi.html');
+            loadSection('gin-tonic', 'sections/bar/gin-tonic.html');
+            loadSection('amari', 'sections/bar/amari.html');
+            loadSection('altri-alcolici', 'sections/bar/altri-alcolici.html');
+        };
 
-        // Funzione per aprire/chiudere i menu
         function toggleSection(btn) {
             const parent = btn.closest('.menu-item');
             parent.classList.toggle('active');
