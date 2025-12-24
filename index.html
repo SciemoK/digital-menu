@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f4f4f4; }
+        .category-card { transition: all 0.3s ease; }
+        .content-drawer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .open .content-drawer { max-height: 2000px; }
+        .open .chevron { transform: rotate(180deg); }
+        /* Slanted background effect like your image */
+        .card-bg {
+            clip-path: polygon(0 0, 70% 0, 100% 100%, 0% 100%);
+        }
+    </style>
+</head>
+<body class="max-w-md mx-auto pb-10">
+
+    <div class="relative h-48 bg-gray-800">
+        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800" alt="Bar" class="w-full h-full object-cover opacity-60">
+        <div class="absolute bottom-4 left-6 text-white">
+            <h1 class="text-3xl font-bold">Bar Menu</h1>
+            <p class="text-sm opacity-80">Caffetteria, bibite, dolci e cocktail</p>
+        </div>
+    </div>
+
+    <div class="p-4 space-y-4">
+
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden accordion-item">
+            <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between relative h-24 text-left">
+                <div class="absolute inset-0 bg-[#A67C00] card-bg z-0"></div>
+                <span class="relative z-10 ml-6 text-white text-xl font-bold uppercase">Caffetteria</span>
+                <div class="mr-4 z-10 text-gray-400">
+                    <svg class="w-6 h-6 chevron transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </button>
+            <div class="content-drawer bg-white">
+                <div class="p-4 space-y-3">
+                    <div class="flex justify-between border-b pb-2"><span>Caffè Espresso</span><span class="font-bold">€ 1,40</span></div>
+                    <div class="flex justify-between border-b pb-2"><span>Caffè Americano</span><span class="font-bold">€ 2,00</span></div>
+                    <div class="flex justify-between border-b pb-2"><span>Cappuccino</span><span class="font-bold">€ 2,00</span></div>
+                    <div class="flex justify-between border-b pb-2">
+                        <div>
+                            <p>Orzo</p>
+                            <p class="text-xs text-gray-500">Piccolo / Grande</p>
+                        </div>
+                        <span class="font-bold">€ 1,50 / € 2,00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden accordion-item">
+            <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between relative h-24 text-left">
+                <div class="absolute inset-0 bg-[#4A7C92] card-bg z-0"></div>
+                <span class="relative z-10 ml-6 text-white text-xl font-bold uppercase">Bibite e Birre</span>
+                <div class="mr-4 z-10 text-gray-400">
+                    <svg class="w-6 h-6 chevron transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </button>
+            <div class="content-drawer bg-white">
+                <div class="p-4 space-y-3">
+                    <div class="flex justify-between border-b pb-2"><span>Acqua 0.5L</span><span class="font-bold">€ 2,00</span></div>
+                    <div class="flex justify-between border-b pb-2"><span>Birra alla spina Calanda (0.3L)</span><span class="font-bold">€ 3,50</span></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleAccordion(element) {
+            const item = element.parentElement;
+            item.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
